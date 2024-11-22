@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insurance Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select, input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function calculateBMI() {
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+
+            if (height > 0 && weight > 0) {
+                const bmi = (weight / ((height / 100) ** 2)).toFixed(2);
+                document.getElementById('bmi').value = bmi;
+            } else {
+                document.getElementById('bmi').value = '';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Get Insurance Premium Charges Prediction</h2>
+    <hr>
+
+    <form action="{{ url_for('predict') }}" method="post">
+        <label for="region">Region:</label>
+        <select id="region" name="region">
+            <option value="se">Southeast</option>
+            <option value="sw">Southwest</option>
+            <option value="ne">Northeast</option>
+            <option value="nw">Northwest</option>
+        </select>
+
+        <label for="children">Children:</label>
+        <select id="children" name="children">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <label for="health">Health:</label>
+        <select id="health" name="health">
+            <option value="1">Underweight</option>
+            <option value="2">Healthy weight</option>
+            <option value="3">Overweight</option>
+            <option value="4">Obese</option>
+        </select>
+
+        <label for="smoker">Smoker:</label>
+        <select id="smoker" name="smoker">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="0">Female</option>
+            <option value="1">Male</option>
+        </select>
+
+        <label for="height">Height (in cm):</label>
+        <input type="text" id="height" name="height" oninput="calculateBMI()" required>
+
+        <label for="weight">Weight (in kg):</label>
+        <input type="text" id="weight" name="weight" oninput="calculateBMI()" required>
+
+        <label for="bmi">BMI:</label>
+        <input type="text" id="bmi" name="bmi" readonly>
+
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" placeholder="Enter your age" required>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>
